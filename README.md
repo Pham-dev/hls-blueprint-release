@@ -7,7 +7,7 @@ This repo will be used to store documents that pertain to HLS Blueprints.  This 
 
 ## HLS Flex for Providers
 
-### Provisioned Flex Twilio Account
+### 1. Provision a New Flex Twilio Account
 
 - Create Twilio account for Flex (https://www.twilio.com/docs/flex/tutorials/setup)
   - Assign account name: hls-flex-provider
