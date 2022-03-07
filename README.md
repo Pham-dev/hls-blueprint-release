@@ -2,6 +2,13 @@
 
 This repo will be used to store documents that pertain to HLS Blueprints.  This will be continually updated as more documents arise.
 
+HLS-Flex-Provider blueprint requires the following:
+- new Flex Twilio Account (DO NOT REUSE existing account you have)
+- Telehealth for Flex (NOTE that this is different from regular Telehealth deployed)
+- HLS-EHR that includes openEMR
+- HLS Flex plug-in
+- Owl Health website that has Webchat client
+
 
 # Installation Guide
 
