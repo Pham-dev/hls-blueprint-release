@@ -64,7 +64,7 @@ docker run --name hls-ehr-installer --rm --publish 3000:3000  \
 
 - Build installer
 ```shell
-docker build --tag hls-telehealth-flex-installer -no-cache  https://github.com/Pham-dev/telehealth-v2.git#main
+docker build --tag hls-telehealth-flex-installer --no-cache  https://github.com/Pham-dev/telehealth-v2.git#main
 ```
 
 - Run installer
