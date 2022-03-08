@@ -14,6 +14,11 @@ HLS-Flex-Provider blueprint requires installing the following:
 
 Please increase the Docker Desktop memory from default 2GB to at least 4GB.
 
+Also run the following to free up unused docker resources.
+```shell
+docker system prunce --force
+```
+
 ---
 ### Provision a New Flex Twilio Account
 
