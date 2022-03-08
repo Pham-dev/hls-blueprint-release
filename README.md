@@ -78,6 +78,14 @@ docker run --name hls-telehealth-flex-installer --rm --publish 3000:3000 \
 
 - Deploy using installer UI entering required information.
 
+- Once deployed, check the terminal window and you should see an output similar to below and the ```REACT_APP_BACKEND_URL``` in this case would be ```flex-telehealth-XXXX-dev.twil.io```
+```
+200 GET /installer/get-application │ Response Type application/json; charset=utf-8
+check-application SERVICE_SID for APPLICATION_NAME (flex-telehealth): ZSXXXXXXXXXXXXXXXXXXXXXXXXXXXX) at https:/flex-telehealth-XXXX-dev.twil.io/administration.html
+check-application: 1.503s
+200 GET /installer/check-application │ Response Type application/json; charset=utf-8
+```
+
 - Once installation is complete, close the installer via either
     - stop button `hls-telehealth-flex-installer` in Docker desktop; or
     - control-C in your terminal
