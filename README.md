@@ -16,7 +16,7 @@ Please increase the Docker Desktop memory from default 2GB to at least 4GB.
 
 Also run the following to free up unused docker resources.
 ```shell
-docker system prunce --force
+docker system prune --force
 ```
 
 ---
