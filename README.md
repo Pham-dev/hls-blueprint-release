@@ -151,6 +151,9 @@ docker run --name hls-website-installer --rm --publish 3000:3000  \
     - stop button `hls-website-installer` in Docker desktop; or
     - control-C in your terminal
 
+- Note the URL for the `hls-website` service in the Twilio console.
+- website URL is http://your-hls-website-url/index.html
+
 ---
 ### Launching Flex Blueprint
 
