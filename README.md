@@ -49,7 +49,7 @@ If you have earlier docker for openemr running please remove it.
 docker build --tag hls-ehr-installer --no-cache https://github.com/bochoi-twlo/hls-ehr.git#main
 ```
 
-- Run installer
+- Start installer and wait 1 minute to start up (watch the terminal output)
 ```shell
 docker run --name hls-ehr-installer --rm --publish 3000:3000  \
 --volume /var/run/docker.sock:/var/run/docker.sock \
@@ -59,7 +59,7 @@ docker run --name hls-ehr-installer --rm --publish 3000:3000  \
 
 - Open installer `http://localhost:3000/installer/index.html`
 
-- Deploy using installer UI entering required information.
+- Deploy using installer UI entering required information and watch the terminal output
 
 - Once installation is complete, close the installer via either
   - stop button `hls-ehr-installer` in Docker desktop; or
@@ -73,7 +73,7 @@ docker run --name hls-ehr-installer --rm --publish 3000:3000  \
 docker build --tag hls-telehealth-flex-installer --no-cache  https://github.com/Pham-dev/telehealth-v2.git#main
 ```
 
-- Run installer
+- Start installer and wait 1 minute to start up (watch the terminal output)
 ```shell
 docker run --name hls-telehealth-flex-installer --rm --publish 3000:3000 \
 --env ACCOUNT_SID=${TWILIO_ACCOUNT_SID} --env AUTH_TOKEN=${TWILIO_AUTH_TOKEN} \
@@ -82,7 +82,7 @@ docker run --name hls-telehealth-flex-installer --rm --publish 3000:3000 \
 
 - Open installer `http://localhost:3000/installer.html`
 
-- Deploy using installer UI entering required information.
+- Deploy using installer UI entering required information and watch the terminal output
 
 - Once deployed, check the terminal window and you should see an output similar to below and the ```REACT_APP_BACKEND_URL``` in this case would be ```flex-telehealth-XXXX-dev.twil.io```
 ```
@@ -114,7 +114,7 @@ docker build --build-arg TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID} \
 --no-cache --tag hls-flex-plugin-installer https://github.com/Pham-dev/hls-emr-flex-plugin.git#main
 ```
 
-- Run installer
+- Start installer and wait 1 minute to start up (watch the terminal output)
 ```shell
 docker run --name hls-flex-plugin-installer --rm --publish 3000:3000 --publish 3001:3001 \
 --env ACCOUNT_SID=${TWILIO_ACCOUNT_SID} --env AUTH_TOKEN=${TWILIO_AUTH_TOKEN} \
@@ -123,7 +123,7 @@ docker run --name hls-flex-plugin-installer --rm --publish 3000:3000 --publish 3
 
 - Open installer `http://localhost:3000/`
 
-- Deploy using installer UI entering required information.
+- Deploy using installer UI entering required information and watch the terminal output
 
 - Once installation is complete, close the installer via either
     - stop button `hls-flex-plugin-installer` in Docker desktop; or
@@ -137,7 +137,7 @@ docker run --name hls-flex-plugin-installer --rm --publish 3000:3000 --publish 3
 docker build --tag hls-website-installer --no-cache https://github.com/bochoi-twlo/hls-website.git#main
 ```
 
-- Run installer
+- Start installer and wait 1 minute to start up (watch the terminal output)
 ```shell
 docker run --name hls-website-installer --rm --publish 3000:3000  \
 --env ACCOUNT_SID=${TWILIO_ACCOUNT_SID} --env AUTH_TOKEN=${TWILIO_AUTH_TOKEN} \
@@ -146,7 +146,7 @@ docker run --name hls-website-installer --rm --publish 3000:3000  \
 
 - Open installer `http://localhost:3000/installer/index.html`
 
-- Deploy using installer UI entering required information.
+- Deploy using installer UI entering required information and watch the terminal output
 
 - Once installation is complete, close the installer via either
     - stop button `hls-website-installer` in Docker desktop; or
