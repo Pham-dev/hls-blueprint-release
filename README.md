@@ -26,6 +26,7 @@ docker system prune --force
   - Assign account name: **hls-flex-provider**
   - Verify MFA
   - Wait until complete ... 
+- Upgrade this trial account to regular account via Monkey (you can do this a bit late before you run the demo)
 - Note the ACCOUNT_SID & AUTH_TOKEN of newly created account from the Twilio console
 - In your terminal, execute the following, substituting your Twilio account sid & auth token
 ```shell
