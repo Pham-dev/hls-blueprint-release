@@ -84,10 +84,10 @@ docker run --name hls-telehealth-flex-installer --rm --publish 3000:3000 \
 
 - Deploy using installer UI entering required information and watch the terminal output
 
-- Once deployed, check the terminal window and you should see an output similar to below and the ```REACT_APP_BACKEND_URL``` in this case would be ```flex-telehealth-XXXX-dev.twil.io```
+- Once deployed, check the terminal window and you should see an output similar to below and the ```REACT_APP_TELEHEALTH_URL``` in this case would be ```telehealth-XXXX-dev.twil.io```
 ```
 200 GET /installer/get-application │ Response Type application/json; charset=utf-8
-check-application SERVICE_SID for APPLICATION_NAME (flex-telehealth): ZSXXXXXXXXXXXXXXXXXXXXXXXXXXXX) at https:/flex-telehealth-XXXX-dev.twil.io/administration.html
+check-application SERVICE_SID for APPLICATION_NAME (flex-telehealth): ZSXXXXXXXXXXXXXXXXXXXXXXXXXXXX) at https://telehealth-XXXX-dev.twil.io/administration.html
 check-application: 1.503s
 200 GET /installer/check-application │ Response Type application/json; charset=utf-8
 ```
@@ -98,11 +98,12 @@ check-application: 1.503s
 
 - Note the deployed service URL (e.g., `telehealth-v2-6531-dev.twil.io`) and execute below replacing `your-react-app-backend-url`
 ```shell
-export REACT_APP_BACKEND_URL=your-react-app-backend-url
+export REACT_APP_TELEHEALTH_URL=your-react-app-telehealth-url
 ```
 
 ---
 ### Install Flex Plugin
+**You may also follow this link which is essentially the same instructions:** https://github.com/Pham-dev/hls-emr-flex-plugin/blob/main/INSTALLATION.md
 
 - Launch your Flex instance and click "Edit" under development setup. Here you'll want to change the React Version to the latest; which is 16.13.1
 
@@ -110,7 +111,7 @@ export REACT_APP_BACKEND_URL=your-react-app-backend-url
 ```shell
 docker build --build-arg TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID} \
 --build-arg TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN} \
---build-arg REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL} \
+--build-arg REACT_APP_TELEHEALTH_URL=${REACT_APP_TELEHEALTH_URL} \
 --no-cache --tag hls-flex-plugin-installer https://github.com/Pham-dev/hls-emr-flex-plugin.git#main
 ```
 
