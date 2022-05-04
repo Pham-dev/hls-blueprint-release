@@ -105,8 +105,6 @@ export REACT_APP_TELEHEALTH_URL=your-react-app-telehealth-url
 ### Install Flex Plugin
 **You may also follow this link which is essentially the same instructions:** https://github.com/Pham-dev/hls-emr-flex-plugin/blob/main/INSTALLATION.md
 
-- Launch your Flex instance and click "Edit" under development setup. Here you'll want to change the React Version to the latest; which is 16.13.1
-
 - Build installer
 ```shell
 docker build --build-arg TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID} \
