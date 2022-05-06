@@ -110,6 +110,7 @@ export REACT_APP_TELEHEALTH_URL=your-react-app-telehealth-url
 docker build --build-arg TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID} \
 --build-arg TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN} \
 --build-arg REACT_APP_TELEHEALTH_URL=${REACT_APP_TELEHEALTH_URL} \
+--build-arg NGROK_URL=${NGROK_URL} \
 --no-cache --tag hls-flex-plugin-installer https://github.com/Pham-dev/hls-emr-flex-plugin.git#main
 ```
 
