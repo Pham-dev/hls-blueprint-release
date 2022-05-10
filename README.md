@@ -12,7 +12,7 @@ docker system prune --force
 ```
 
 ## Table of Contents  
-1. [Flex Plugin Blueprint](https://github.com/Pham-dev/hls-blueprint-release/blob/main/README.md)
+1. [Flex Plugin Blueprint](https://github.com/Pham-dev/hls-blueprint-release/blob/main/README.md#blueprint-1-flex-plugin-with-openemr-and-telehealth)
     - Provision a New Flex Account
     - Install HLS-EMR (OpenEMR)
     - Install Telehealth for Flex
