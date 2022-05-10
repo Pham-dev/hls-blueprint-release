@@ -2,15 +2,11 @@
 
 This repo will be used to store documents that pertain to HLS Blueprints.  This will be continually updated as more documents arise.
 
-HLS-Flex-Provider blueprint requires installing the following:
-- new Flex Twilio Account (DO NOT REUSE existing account you have)
-- HLS-EHR that includes openEMR
-- Telehealth for Flex (NOTE that this is different from regular Telehealth deployed)
-- HLS Flex plug-in
-- Owl Health website that has Webchat client
+## Flex Plugin with OpenEMR and Telehealth
+*This requires a Flex Account, Flex Plugin, OpenEMR, Telehealth and Owl Health Website to work.*
 
 
-## IG for HLS Flex for Providers Blueprint
+### IG for HLS Flex for Providers Blueprint
 
 Please increase the Docker Desktop memory from default 2GB to at least 4GB.
 
@@ -102,32 +98,44 @@ export REACT_APP_TELEHEALTH_URL=your-react-app-telehealth-url
 ```
 
 ---
-### Install Flex Plugin
-**You may also follow this link which is essentially the same instructions:** https://github.com/Pham-dev/hls-emr-flex-plugin/blob/main/INSTALLATION.md
+### Installing the Plugin on your Flex Instance
 
-- Build installer
-```shell
-docker build --build-arg TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID} \
---build-arg TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN} \
---build-arg REACT_APP_TELEHEALTH_URL=${REACT_APP_TELEHEALTH_URL} \
---build-arg NGROK_URL=${NGROK_URL} \
---no-cache --tag hls-flex-plugin-installer https://github.com/Pham-dev/hls-emr-flex-plugin.git#main
+**1. Prerequisite(s)**
+
+**Ensure OpenEMR and ngrok are installed and running**
+
+When you accept a task in Flex, the name of the customer in the chat is queried in OpenEMR in order to obtain patient data and displayed in the information pane. Thus, OpenEMR must be installed. `ngrok` is also required, as it allows the plugin to communicate over the internet into the OpenEMR instance running on your local machine.
+
+1. Follow the instructions here to install and run the [open-emr](https://github.com/bochoi-twlo/hls-ehr#deploy-hls-ehr) repo. 
+2. Follow the instructions here to setup ngrok.
+3. Once ngrok is installed and you have an ngrok account, you will need to add a domain to ngrok. Go to Cloud Edge > Domains > New Domain. Add a domain name of your choosing. Add your authtoken by executing `ngrok authtoken <authtoken>` (the instructions on ngrok's docs are currently incorrect!) Then, from your local machine, run `ngrok http --region=us --hostname=ssepac.ngrok.io 80`, then record the forwarding address listed in your terminal for the next step. (i.e. bjohnson.ngrok.io (ignore the http://))
+
+**2. Deploy the Plugin to your Flex Instance**
+
+1. Build the docker image of this installer by running this command in your terminal. You'll need to get your Account Sid and Auth Token from your Twilio Console:
+
+```
+docker build --build-arg TWILIO_ACCOUNT_SID={ACCOUNT_SID} --build-arg TWILIO_AUTH_TOKEN={AUTH_TOKEN} --build-arg REACT_APP_TELEHEALTH_URL={REACT_APP_TELEHEALTH_URL} --build-arg NGROK_URL={NGROK_URL} --no-cache --tag hls-flex-plugin https://github.com/Pham-dev/hls-emr-flex-plugin.git#main
 ```
 
-- Start installer and wait 1 minute to start up (watch the terminal output)
-```shell
-docker run --name hls-flex-plugin-installer --rm --publish 3000:3000 --publish 3001:3001 \
---env ACCOUNT_SID=${TWILIO_ACCOUNT_SID} --env AUTH_TOKEN=${TWILIO_AUTH_TOKEN} \
---interactive --tty hls-flex-plugin-installer 
+2. Now run the built docker image by executing this command:
+
+```
+docker run --name hls-flex-plugin --rm -p 3000:3000 -p 3001:3001 -e ACCOUNT_SID={ACCOUNT_SID} -e AUTH_TOKEN={AUTH_TOKEN} -it hls-flex-plugin
 ```
 
-- Open installer `http://localhost:3000/`
+3. Go ahead and open [http://localhost:3000/](http://localhost:3000/) on your favorite browser.
 
-- Deploy using installer UI entering required information and watch the terminal output
+4. Your credentials should load on the page and all you have to do is click the "Deploy this application" button and you're all set!
 
-- Once installation is complete, close the installer via either
-    - stop button `hls-flex-plugin-installer` in Docker desktop; or
-    - control-C in your terminal
+5. You can launch your Flex instance in your flex account to see the plugin now properly installed.
+
+**Subsequent Installs**
+
+- Just repeat Step 2 above
+- Notes:
+  - clear your cache on your browser if you run into problems
+  - Re-installing will produce the latest version of the plugin
 
 ---
 ### Install HLS Website (aka OwlHealth)
