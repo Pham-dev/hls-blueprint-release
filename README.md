@@ -14,12 +14,11 @@ Also run the following to free up unused docker resources.
 docker system prune --force
 ```
 
-## Flex Plugin with OpenEMR and Telehealth
+## Blueprint #1: Flex Plugin with OpenEMR and Telehealth
 *This requires a Flex Account, Flex Plugin, OpenEMR, Telehealth and Owl Health Website to work.*
 
 Follow the instructions with [Flex Plugin] below to install the Flex Plugin.
 
----
 ### [Flex Plugin] Provision a New Flex Twilio Account
 
 - Create **NEW** Twilio account for Flex per [Set up your Twilio flex instance](https://www.twilio.com/docs/flex/tutorials/setup)
@@ -39,7 +38,6 @@ export TWILIO_AUTH_TOKEN=your-flex-twilio-auth-token
 Keep the terminal open as you will use it throughout the installation.
 Just copy-n-paste the commands below as is and monitor the terminal output for any error messages.
 
----
 ### [Flex Plugin] Install HLS-EHR
 
 If you have earlier docker for openemr running please remove it.
@@ -65,7 +63,6 @@ docker run --name hls-ehr-installer --rm --publish 3000:3000  \
   - stop button `hls-ehr-installer` in Docker desktop; or
   - control-C in your terminal
 
----
 ### [Flex Plugin] Install Telehealth for Flex
 
 - Build installer
@@ -101,7 +98,6 @@ check-application: 1.503s
 export REACT_APP_TELEHEALTH_URL=your-react-app-telehealth-url
 ```
 
----
 ### [Flex Plugin] Installing the Plugin on your Flex Instance
 
 **1. Prerequisite(s)**
@@ -141,7 +137,6 @@ docker run --name hls-flex-plugin --rm -p 3000:3000 -p 3001:3001 -e ACCOUNT_SID=
   - clear your cache on your browser if you run into problems
   - Re-installing will produce the latest version of the plugin
 
----
 ### [Flex Plugin] Install HLS Website (aka OwlHealth)
 
 - Build installer
@@ -167,7 +162,6 @@ docker run --name hls-website-installer --rm --publish 3000:3000  \
 - Note the URL for the `hls-website` service in the Twilio console.
 - website URL is http://your-hls-website-url/index.html
 
----
 ### [Flex Plugin] Launching Flex Blueprint
 
 After installation, you **MUST** launch chrome via command to overcome iframe restrictions of the browser
@@ -175,3 +169,4 @@ After installation, you **MUST** launch chrome via command to overcome iframe re
 ```shell
 open -na Google\ Chrome --args --user-data-dir=/tmp/temporary-chrome-profile-dir --disable-web-security --disable-site-isolation-trials
 ```
+---
