@@ -2,9 +2,6 @@
 
 This repo will be used to store documents that pertain to HLS Blueprints.  This will be continually updated as more documents arise.
 
-**Projects**:
-- [Flex Plugin]
-
 ### System Prerequisites
 
 Please increase the Docker Desktop memory from default 2GB to at least 4GB.
@@ -13,6 +10,14 @@ Also run the following to free up unused docker resources.
 ```shell
 docker system prune --force
 ```
+
+## Table of Contents  
+1. [Flex Plugin Blueprint](https://github.com/Pham-dev/hls-blueprint-release/edit/main/README.md#blueprint-1-flex-plugin-with-openemr-and-telehealth)
+    - Provision a New Flex Account
+    - Install HLS-EMR (OpenEMR)
+    - Install Telehealth for Flex
+    - Install the plugin on your Flex instance
+    - Install the HLS Website
 
 ## Blueprint #1: Flex Plugin with OpenEMR and Telehealth
 *This requires a Flex Account, Flex Plugin, OpenEMR, Telehealth and Owl Health Website to work.*
