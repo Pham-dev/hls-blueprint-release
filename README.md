@@ -2,8 +2,13 @@
 
 This repo will be used to store documents that pertain to HLS Blueprints.  This will be continually updated as more documents arise.
 
+**Projects**:
+- [Flex Plugin]
+
 ## Flex Plugin with OpenEMR and Telehealth
 *This requires a Flex Account, Flex Plugin, OpenEMR, Telehealth and Owl Health Website to work.*
+
+Follow the instructions with [Flex Plugin] Below to install the Flex Plugin.
 
 
 ### IG for HLS Flex for Providers Blueprint
@@ -16,7 +21,7 @@ docker system prune --force
 ```
 
 ---
-### Provision a New Flex Twilio Account
+### [Flex Plugin] Provision a New Flex Twilio Account
 
 - Create **NEW** Twilio account for Flex per [Set up your Twilio flex instance](https://www.twilio.com/docs/flex/tutorials/setup)
   - Assign account name: **hls-flex-provider**
@@ -36,7 +41,7 @@ Keep the terminal open as you will use it throughout the installation.
 Just copy-n-paste the commands below as is and monitor the terminal output for any error messages.
 
 ---
-### Install HLS-EHR
+### [Flex Plugin] Install HLS-EHR
 
 If you have earlier docker for openemr running please remove it.
 
@@ -62,7 +67,7 @@ docker run --name hls-ehr-installer --rm --publish 3000:3000  \
   - control-C in your terminal
 
 ---
-### Install Telehealth for Flex
+### [Flex Plugin] Install Telehealth for Flex
 
 - Build installer
 ```shell
@@ -98,7 +103,7 @@ export REACT_APP_TELEHEALTH_URL=your-react-app-telehealth-url
 ```
 
 ---
-### Installing the Plugin on your Flex Instance
+### [Flex Plugin] Installing the Plugin on your Flex Instance
 
 **1. Prerequisite(s)**
 
@@ -138,7 +143,7 @@ docker run --name hls-flex-plugin --rm -p 3000:3000 -p 3001:3001 -e ACCOUNT_SID=
   - Re-installing will produce the latest version of the plugin
 
 ---
-### Install HLS Website (aka OwlHealth)
+### [Flex Plugin] Install HLS Website (aka OwlHealth)
 
 - Build installer
  ```shell
@@ -164,7 +169,7 @@ docker run --name hls-website-installer --rm --publish 3000:3000  \
 - website URL is http://your-hls-website-url/index.html
 
 ---
-### Launching Flex Blueprint
+### [Flex Plugin] Launching Flex Blueprint
 
 After installation, you **MUST** launch chrome via command to overcome iframe restrictions of the browser
 
