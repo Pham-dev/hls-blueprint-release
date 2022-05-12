@@ -4,13 +4,17 @@ This repo will be used to store documents that pertain to HLS Blueprints.  This 
 
 ### System Prerequisites
 
-Please increase the Docker Desktop memory from default 2GB to at least 4GB.
 
-Also run the following to free up unused docker resources.
-```shell
-docker system prune --force
-```
-
+1. Docker Setup
+     - Please increase the Docker Desktop memory from default 2GB to at least 4GB.
+     - Free up resources used by docker by running the following in a terminal: 
+       - `docker system prune --force`
+2. If running locally on MacOS (not recommended):
+     - If you are not planning on running the HLS Blueprints with the provided Docker installation, ensure you have the following installed on your system:
+       - Node 14.x.x. (Ensure you are using Node 14, not higher or lower!)
+       - Twilio CLI, and have run the following:
+         - `twilio plugins:install @twilio-labs/plugin-serverless`
+         - `twilio plugins:install @twilio-labs/plugin-flex`
 ## Table of Contents  
 1. [Flex Plugin Blueprint](https://github.com/Pham-dev/hls-blueprint-release/blob/main/README.md#blueprint-1-flex-plugin-with-openemr-and-telehealth)
     - Provision a New Flex Account
@@ -114,19 +118,20 @@ When you accept a task in Flex, the name of the customer in the chat is queried 
 1. Follow the instructions here to install and run the [open-emr](https://github.com/bochoi-twlo/hls-ehr#deploy-hls-ehr) repo. 
 2. Follow the instructions here to setup ngrok.
 3. Once ngrok is installed and you have an ngrok account, you will need to add a domain to ngrok. Go to Cloud Edge > Domains > New Domain. Add a domain name of your choosing. Add your authtoken by executing `ngrok authtoken <authtoken>` (the instructions on ngrok's docs are currently incorrect!) Then, from your local machine, run `ngrok http --region=us --hostname=ssepac.ngrok.io 80`, then record the forwarding address listed in your terminal for the next step. (i.e. bjohnson.ngrok.io (ignore the http://))
+4. Export your `NGROK_URL` as an environment  variable (i.e. `export NGROK_URL=ssepac.ngrok.io`)
 
 **2. Deploy the Plugin to your Flex Instance**
 
 1. Build the docker image of this installer by running this command in your terminal. You'll need to get your Account Sid and Auth Token from your Twilio Console:
 
 ```
-docker build --build-arg TWILIO_ACCOUNT_SID={ACCOUNT_SID} --build-arg TWILIO_AUTH_TOKEN={AUTH_TOKEN} --build-arg REACT_APP_TELEHEALTH_URL={REACT_APP_TELEHEALTH_URL} --build-arg NGROK_URL={NGROK_URL} --no-cache --tag hls-flex-plugin https://github.com/Pham-dev/hls-emr-flex-plugin.git#main
+docker build --build-arg TWILIO_ACCOUNT_SID={TWILIO_ACCOUNT_SID} --build-arg TWILIO_AUTH_TOKEN={TWILIO_AUTH_TOKEN} --build-arg REACT_APP_TELEHEALTH_URL={REACT_APP_TELEHEALTH_URL} --build-arg NGROK_URL={NGROK_URL} --no-cache --tag hls-flex-plugin https://github.com/Pham-dev/hls-emr-flex-plugin.git#main
 ```
 
 2. Now run the built docker image by executing this command:
 
 ```
-docker run --name hls-flex-plugin --rm -p 3000:3000 -p 3001:3001 -e ACCOUNT_SID={ACCOUNT_SID} -e AUTH_TOKEN={AUTH_TOKEN} -it hls-flex-plugin
+docker run --name hls-flex-plugin --rm -p 3000:3000 -p 3001:3001 -e ACCOUNT_SID={TWILIO_ACCOUNT_SID} -e AUTH_TOKEN={TWILIO_AUTH_TOKEN} -it hls-flex-plugin
 ```
 
 3. Go ahead and open [http://localhost:3000/](http://localhost:3000/) on your favorite browser.
@@ -134,6 +139,10 @@ docker run --name hls-flex-plugin --rm -p 3000:3000 -p 3001:3001 -e ACCOUNT_SID=
 4. Your credentials should load on the page and all you have to do is click the "Deploy this application" button and you're all set!
 
 5. You can launch your Flex instance in your flex account to see the plugin now properly installed.
+
+6. Once installation is complete, close the installer via either
+     - stop button `hls-flex-plugin` in Docker desktop; or
+     - control-C in your terminal
 
 **Subsequent Installs**
 
