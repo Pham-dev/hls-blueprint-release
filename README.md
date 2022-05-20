@@ -98,6 +98,8 @@ check-application: 1.503s
 200 GET /installer/check-application │ Response Type application/json; charset=utf-8
 ```
 
+## ❗❗ Ankit's note: I got a 500 error on a POST and then the 200 on the GET for /installer/check-application - as long as that's ok, then we're good
+
 - Once installation is complete, close the installer via either
     - stop button `hls-telehealth-flex-installer` in Docker desktop; or
     - control-C in your terminal
@@ -112,6 +114,8 @@ export REACT_APP_TELEHEALTH_URL=your-react-app-telehealth-url
 **1. Prerequisite(s)**
 
 **Ensure OpenEMR and ngrok are installed and running**
+
+## ❗❗ Ankit's note: do we need to reinstall OpenEMR here? I think it was installed in a previous step
 
 When you accept a task in Flex, the name of the customer in the chat is queried in OpenEMR in order to obtain patient data and displayed in the information pane. Thus, OpenEMR must be installed. `ngrok` is also required, as it allows the plugin to communicate over the internet into the OpenEMR instance running on your local machine.
 
@@ -128,11 +132,14 @@ When you accept a task in Flex, the name of the customer in the chat is queried 
 docker build --build-arg TWILIO_ACCOUNT_SID={TWILIO_ACCOUNT_SID} --build-arg TWILIO_AUTH_TOKEN={TWILIO_AUTH_TOKEN} --build-arg REACT_APP_TELEHEALTH_URL={REACT_APP_TELEHEALTH_URL} --build-arg REACT_APP_NGROK_URL={REACT_APP_NGROK_URL} --no-cache --tag hls-flex-plugin https://github.com/Pham-dev/hls-emr-flex-plugin.git#main
 ```
 
+## ❗❗ Ankit's note: we may need to have them manually copy and paste the account sid, etc
+
 2. Now run the built docker image by executing this command:
 
 ```
 docker run --name hls-flex-plugin --rm -p 3000:3000 -p 3001:3001 -e ACCOUNT_SID={TWILIO_ACCOUNT_SID} -e AUTH_TOKEN={TWILIO_AUTH_TOKEN} -it hls-flex-plugin
 ```
+## ❗❗ Ankit's note: same as above
 
 3. Go ahead and open [http://localhost:3000/](http://localhost:3000/) on your favorite browser.
 
