@@ -44,6 +44,7 @@ export TWILIO_AUTH_TOKEN=your-flex-twilio-auth-token
 - Change your Flex instance to version 1.30.2
   - Go to Versions in your Flex Instance page
   - The current version will probably be 2.0.1 so change it to version 1.30.2
+  - see https://www.twilio.com/docs/flex/developer/plugins/migration-guide#rollback-changes-to-use-flex-ui-1x
 
 Keep the terminal open as you will use it throughout the installation.
 Just copy-n-paste the commands below as is and monitor the terminal output for any error messages.
