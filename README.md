@@ -5,16 +5,14 @@ This repo will be used to store documents that pertain to HLS Blueprints.  This 
 ### System Prerequisites
 
 
-1. Docker Setup
-     - Please increase the Docker Desktop memory from default 2GB to at least 4GB.
-     - Free up resources used by docker by running the following in a terminal: 
-       - `docker system prune --force`
-2. If running locally on MacOS (not recommended):
-     - If you are not planning on running the HLS Blueprints with the provided Docker installation, ensure you have the following installed on your system:
-       - Node 14.x.x. (Ensure you are using Node 14, not higher or lower!)
-       - Twilio CLI, and have run the following:
-         - `twilio plugins:install @twilio-labs/plugin-serverless`
-         - `twilio plugins:install @twilio-labs/plugin-flex`
+Docker Desktop Setup
+- Goto https://www.docker.com/products/docker-desktop/
+- Please increase the Docker Desktop memory from default 2GB to at least 4GB, ideally 6GB.
+- Free up resources used by docker by running the following in a terminal: 
+```shell
+docker system prune --force
+```
+
 ## Table of Contents  
 1. [Flex Plugin Blueprint](https://github.com/Pham-dev/hls-blueprint-release/blob/main/README.md#blueprint-1-flex-plugin-with-openemr-and-telehealth)
     - Provision a New Flex Account
