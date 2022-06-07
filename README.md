@@ -105,6 +105,10 @@ check-application: 1.503s
 export REACT_APP_TELEHEALTH_URL=your-react-app-telehealth-hostname
 ```
 
+#### Common Errors
+- When pressing the deploy button for the Telehealth installer, it will occassionally fail to deploy some assets.
+  - To fix this, just click redeploy until the deployment process successfully finishes.  You may need to do this a handful of times.
+
 ### [Flex Plugin] Installing the Plugin on your Flex Instance
 
 **1. Prerequisite(s)**
