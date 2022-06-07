@@ -141,6 +141,9 @@ docker run --name hls-flex-plugin --rm -p 3000:3000 -p 3001:3001 -e ACCOUNT_SID=
 6. Once installation is complete, close the installer via either
      - stop button `hls-flex-plugin` in Docker desktop; or
      - control-C in your terminal
+7. On the left pane in the Twilio Console, select Flex > Manage > Messaging. Under Legacy Addresses, select Create New Address and submit a new entry with the following:
+
+![img](https://i.imgur.com/gu9y9Ga.png)
 
 **Subsequent Installs**
 
@@ -173,6 +176,11 @@ docker run --name hls-website-installer --rm --publish 3000:3000  \
 
 - Note the URL for the `hls-website` service in the Twilio console.
 - website URL is http://your-hls-website-url/index.html
+
+- On the left pane in the Twilio Console, go to Flex > Manage > Messaging. Remove the entry under Conversations Addresses so that it is left empty. Select Legacy Addresses and then add a new entry with the following filled out:
+![img](https://i.imgur.com/JocU0ST.png)
+- You should now have only two entries under Legacy Addresses, and none under Conversations Addresses. 
+![img](https://i.imgur.com/UW58iQg.png)
 
 ### [Flex Plugin] Launching Flex Blueprint
 
