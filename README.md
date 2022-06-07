@@ -129,7 +129,7 @@ docker build --build-arg TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID} --build-arg TW
 2. Now run the built docker image by executing this command:
 
 ```
-docker run --name hls-flex-plugin --rm -p 3000:3000 -p 3001:3001 -e ACCOUNT_SID={TWILIO_ACCOUNT_SID} -e AUTH_TOKEN={TWILIO_AUTH_TOKEN} -it hls-flex-plugin
+docker run --name hls-flex-plugin --rm -p 3000:3000 -p 3001:3001 -e ACCOUNT_SID=${TWILIO_ACCOUNT_SID} -e AUTH_TOKEN=${TWILIO_AUTH_TOKEN} -it hls-flex-plugin
 ```
 
 3. Go ahead and open [http://localhost:3000/](http://localhost:3000/) on your favorite browser.
@@ -143,11 +143,11 @@ docker run --name hls-flex-plugin --rm -p 3000:3000 -p 3001:3001 -e ACCOUNT_SID=
      - control-C in your terminal
 7. On the left pane in the Twilio Console, select Flex > Manage > Messaging. Under Legacy Addresses, select Create New Address and submit a new entry with the following:
 
-![img](https://i.imgur.com/gu9y9Ga.png)
+![img](images/flex-create-new-address.png)
 
 **Subsequent Installs**
 
-- Just repeat Step 2 above
+- Just repeat Step 1 through 4 above
 - Notes:
   - clear your cache on your browser if you run into problems
   - Re-installing will produce the latest version of the plugin
@@ -177,10 +177,6 @@ docker run --name hls-website-installer --rm --publish 3000:3000  \
 - Note the URL for the `hls-website` service in the Twilio console.
 - website URL is http://your-hls-website-url/index.html
 
-- On the left pane in the Twilio Console, go to Flex > Manage > Messaging. Remove the entry under Conversations Addresses so that it is left empty. Select Legacy Addresses and then add a new entry with the following filled out:
-![img](https://i.imgur.com/JocU0ST.png)
-- You should now have only two entries under Legacy Addresses, and none under Conversations Addresses. 
-![img](https://i.imgur.com/UW58iQg.png)
 
 ### [Flex Plugin] Launching Flex Blueprint
 
@@ -190,3 +186,11 @@ After installation, you **MUST** launch chrome via command to overcome iframe re
 open -na Google\ Chrome --args --user-data-dir=/tmp/temporary-chrome-profile-dir --disable-web-security --disable-site-isolation-trials
 ```
 ---
+
+
+### Ignore
+
+- On the left pane in the Twilio Console, go to Flex > Manage > Messaging. Remove the entry under Conversations Addresses so that it is left empty. Select Legacy Addresses and then add a new entry with the following filled out:
+  ![img](https://i.imgur.com/JocU0ST.png)
+- You should now have only two entries under Legacy Addresses, and none under Conversations Addresses.
+  ![img](https://i.imgur.com/UW58iQg.png)
