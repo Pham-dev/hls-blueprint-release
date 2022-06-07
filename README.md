@@ -191,6 +191,53 @@ open -na Google\ Chrome --args --user-data-dir=/tmp/temporary-chrome-profile-dir
 ```
 ---
 
+### [Optional] Get SMS Translation on your Flex Instance via LionBridge Translations
+
+This is an optional step and is not required to get things working.
+
+- First, downgrade Flex to Version 1.30.2:
+  - In your Flex Instance, click on the controls Tab
+  - Then Click on "Versions"
+  - Then choose Version: 1.30.2 and install that
+- Create the Lionbridge Plugin by running this command in your terminal
+```shell
+curl -X POST https://flex-api.twilio.com/v1/PluginService/Plugins \
+--data-urlencode "FriendlyName=Lionbridge Language Cloud" \
+--data-urlencode "Description=Real-time language translation provided by Lionbridge" \
+--data-urlencode "UniqueName=lionbridge" \
+-u ${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}
+```
+- Next use the response from the above command and make note of the PluginSid (ex: FPXXXXXXXXXXX) and run this command in the terminal but replace the FPXXXXXXX.... string with your PluginSid
+```shell
+curl -X POST https://flex-api.twilio.com/v1/PluginService/Plugins/FPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Versions \
+--data-urlencode "Private=True" \
+--data-urlencode "Version=1.0.0" \
+--data-urlencode "PluginUrl=https://developers.lionbridge.com/geofluent/plugin/plugin-geofluent.js" \
+-u -u ${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}
+```
+- Release the Plugin to your Flex account
+```shell
+twilio flex:plugins:release --plugin lionbridge@1.0.0 --name "Lionbridge" --description "Adding Lionbridge integration"
+```
+- Next Configure your Lionbridge Plugin to call the ```/get-credentials``` function that was deployed in the plugin-backend which should already been deployed alongside your Flex install.  ```PLUGIN_BACKEND_URL``` can be found in the Twilio console under Functions and Assets -> Services.  Then click on your ```plugin-backend``` and take note of the url at the bottom left of the screen.  It should look like this: ```plugin-backend-XXXX-dev.twil.io```.  You will need this URL for the below command. Fill out the command and run it in the terminal
+```shell
+curl -s 'https://flex-api.twilio.com/v1/Configuration' -u ${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN} | jq -r -c '{ attributes: .attributes } * { "account_sid": "${TWILIO_ACCOUNT_SID}", "attributes": { "lionbridge": {"credentials": "https://${PLUGIN_BACKEND_URL}/get-credentials"} }}' | curl -s -X POST 'https://flex-api.twilio.com/v1/Configuration' -u ${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN} -H 'Content-Type: application/json' -d @-
+```
+- We'll now set the language we want text to be translated to
+  - Launch Flex and click on the controls button on the left Panel
+  - Click on Skills and under "Add New Skill" add the following Languages depending on prefered language to translate to:
+    - Spanish: add "language*es-xl
+    - Brazilian Portuguese: add "language*pt-br"
+- Now assign the language skill to Agents:
+  - In the Agent Tab, 3rd down on the left panel of the Flex Instance:
+    - Click on an agent
+    - On the right there will be the Agent's skills listed
+    - Click the "Add skill" Dropdown and pick the prefered language to translate to
+    - Click the Blue Plus button to the right of it and make sure it is checked on
+    - NOTE: Only have 1 language chosen at a time
+    - Hit save and you're good to go.
+- Now incoming SMS will be translated by Lionbridge.
+
 
 ### Ignore
 
