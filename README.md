@@ -88,7 +88,7 @@ docker run --name hls-telehealth-flex-installer --rm --publish 3000:3000 \
 
 - Deploy using installer UI entering required information and watch the terminal output
 
-- Once deployed, check the terminal window and you should see an output similar to below and the ```REACT_APP_TELEHEALTH_URL``` in this case would be ```telehealth-XXXX-dev.twil.io```
+- Once deployed, check the terminal window and you should see an output similar to below and the ```REACT_APP_TELEHEALTH_URL``` in this case would be ```telehealth-XXXX-dev.twil.io``` (just the hostname excluding `https://` prefix
 ```
 200 GET /installer/get-application │ Response Type application/json; charset=utf-8
 check-application SERVICE_SID for APPLICATION_NAME (flex-telehealth): ZSXXXXXXXXXXXXXXXXXXXXXXXXXXXX) at https://telehealth-XXXX-dev.twil.io/administration.html
@@ -100,9 +100,9 @@ check-application: 1.503s
     - stop button `hls-telehealth-flex-installer` in Docker desktop; or
     - control-C in your terminal
 
-- Note the deployed service URL (e.g., `telehealth-v2-6531-dev.twil.io`) and execute below replacing `your-react-app-backend-url`
+- Note the deployed service hostname (e.g., `telehealth-v2-6531-dev.twil.io` excluding `https://` prefix) and execute below replacing `your-react-app-backend-hostname`
 ```shell
-export REACT_APP_TELEHEALTH_URL=your-react-app-telehealth-url
+export REACT_APP_TELEHEALTH_URL=your-react-app-telehealth-hostname
 ```
 
 ### [Flex Plugin] Installing the Plugin on your Flex Instance
