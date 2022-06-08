@@ -42,6 +42,11 @@ ngrok authtoken your-ngrok-auth-token
   - Add a domain name of your choosing. (e.g., `ssepac.ngrok.io` using your twilio login)
   - Note this ngrok domain name for later use
 
+If your `ngrok` version is not 3.3 or higher, run the following to update
+```shell
+brew reinstall --cask ngrok
+```
+
 
 ---
 
