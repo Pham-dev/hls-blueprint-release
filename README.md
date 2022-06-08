@@ -46,7 +46,10 @@ If your `ngrok` version is not 3.3 or higher, run the following to update
 ```shell
 brew reinstall --cask ngrok
 ```
-
+and then upgrade your ngrok configuration too by
+```shell
+ngrok config upgrade
+```
 
 ---
 
