@@ -1,40 +1,73 @@
 # HLS Blueprint Release Docs
 
-This repo will be used to store documents that pertain to HLS Blueprints.  This will be continually updated as more documents arise.
+This repo will be used to store documents that pertain to HLS Blueprints. This will be continually updated as more documents arise.
 
-### System Prerequisites
+- [Flex for Provider](#flex-for-provider-f4p-blueprint)
+-
 
+---
 
-Docker Desktop Setup
+### Prerequisites
+
+#### Docker Desktop
+
 - Goto https://www.docker.com/products/docker-desktop/
-- Please increase the Docker Desktop memory from default 2GB to at least 4GB, ideally 6GB.
-- Free up resources used by docker by running the following in a terminal: 
+- Download and install
+- *Increase the Docker Desktop memory from default 2GB to 6GB*
+- Before you begin, free up resources used by docker by running the following in a terminal: 
 ```shell
 docker system prune --force
 ```
 
-## Table of Contents  
-1. [Flex Plugin Blueprint](https://github.com/Pham-dev/hls-blueprint-release/blob/main/README.md#blueprint-1-flex-plugin-with-openemr-and-telehealth)
-    - Provision a New Flex Account
-    - Install HLS-EMR (OpenEMR)
-    - Install Telehealth for Flex
-    - Install the plugin on your Flex instance
-    - Install the HLS Website
+#### ngrok
 
-## Blueprint #1: Flex Plugin with OpenEMR and Telehealth
-*This requires a Flex Account, Flex Plugin, OpenEMR, Telehealth and Owl Health Website to work.*
+When you accept a task in Flex, the name of the customer in the chat is queried in OpenEMR
+in order to obtain patient data and displayed in the information pane.
+Thus, OpenEMR must be installed. `ngrok` is also required,
+as it allows the plugin to communicate over the internet into the OpenEMR instance running on your local machine.
 
-Follow the instructions with [Flex Plugin] below to install the Flex Plugin.
+- Goto https://ngrok.com/download
+- Download and install ngrok
+- If you have twilio email, register at http://ngrok.com using your twilio email
+- Get yourself invited from hls team member to assign a static ngrok url for yourself
+  (e.g., `bochoi.ngrok.io`)
+- Accept the invite and login
+- Note your own authtoken at https://dashboard.ngrok.com/get-started/your-authtoken
+- Add your authtoken to your ngrok via executing the following in the terminal
+```shell
+ngrok authtoken your-ngrok-auth-token
+```
+- Go to Cloud Edge → Domains
+  - Click '+ New Domain' button
+  - Add a domain name of your choosing. (e.g., `ssepac.ngrok.io` using your twilio login)
+  - Note this ngrok domain name for later use
 
-### [Flex Plugin] Provision a New Flex Twilio Account
+
+---
+
+## Flex for Provider (F4P) Blueprint
+
+- [Provision a New Flex Account](#f4p-provision-a-new-flex-account)
+- [Install OpenEMR](#f4p-install-openemr)
+- [Install Telehealth](#f4p-install-telehealth)
+- [Install Flex Plugin](#f4p-install-flex-plugin)
+- [Install OwlHealth Website](#f4p-install-owlhealth-website)
+- [Launch Flex Blueprint](#f4p-launch-flex-blueprint)
+- [Uninstall Flex Blueprint](#f4p-unistall-blueprint)
+- [Translation Services via Lionsbridge](#f4p-optional-get-sms-translation-on-your-flex-instance-via-lionbridge-translations)
+
+### F4P Provision a New Flex Account
 
 - Create **NEW** Twilio account for Flex per [Set up your Twilio flex instance](https://www.twilio.com/docs/flex/tutorials/setup)
-  - Assign account name: **hls-flex-provider**
+  - Assign account name: **hls-flex-provider** (or some variation of)
   - Verify MFA
   - Wait until complete ... 
-- Upgrade this trial account to regular account via Monkey (you can do this a bit late before you run the demo)
+- Upgrade this trial account to regular account via Monkey (you can do this a bit later before you run the demo)
+
 - Note the ACCOUNT_SID & AUTH_TOKEN of newly created account from the Twilio console
+
 - In your terminal, execute the following, substituting your Twilio account sid & auth token
+
 ```shell
 export TWILIO_ACCOUNT_SID=your-flex-twilio-account-sid
 ```
@@ -45,7 +78,8 @@ export TWILIO_AUTH_TOKEN=your-flex-twilio-auth-token
 Keep the terminal open as you will use it throughout the installation.
 Just copy-n-paste the commands below as is and monitor the terminal output for any error messages.
 
-### [Flex Plugin] Install HLS-EHR
+
+### F4P Install OpenEMR
 
 If you have earlier docker for openemr running please remove it.
 
@@ -64,13 +98,18 @@ docker run --name hls-ehr-installer --rm --publish 3000:3000  \
 
 - Open installer `http://localhost:3000/installer/index.html`
 
+- If you wish to reinstall, you must first remove existing installation by either
+  - Clicking on the 'Remove...' button at the bottoml or
+  - Manually delete the `hls-ehr` docker stack via the docker desktop.
+    If you are unable to delete the stack, you can delete it's container one-by-one
+
 - Deploy using installer UI entering required information and watch the terminal output
 
 - Once installation is complete, close the installer via either
   - stop button `hls-ehr-installer` in Docker desktop; or
   - control-C in your terminal
 
-### [Flex Plugin] Install Telehealth for Flex
+### F4P Install Telehealth
 
 - Build installer
 ```shell
@@ -88,8 +127,9 @@ docker run --name hls-telehealth-flex-installer --rm --publish 3000:3000 \
 
 - Deploy using installer UI entering required information and watch the terminal output
 
-- Once deployed, check the terminal window and you should see an output similar to below and the ```REACT_APP_TELEHEALTH_URL``` in this case would be ```telehealth-XXXX-dev.twil.io``` (just the hostname excluding `https://` prefix
-```
+- Once deployed, check the terminal window and you should see an output similar to below
+  and the ```REACT_APP_TELEHEALTH_URL``` in this case would be ```telehealth-XXXX-dev.twil.io``` (just the hostname excluding `https://` prefix)
+```shell
 200 GET /installer/get-application │ Response Type application/json; charset=utf-8
 check-application SERVICE_SID for APPLICATION_NAME (flex-telehealth): ZSXXXXXXXXXXXXXXXXXXXXXXXXXXXX) at https://telehealth-XXXX-dev.twil.io/administration.html
 check-application: 1.503s
@@ -109,54 +149,46 @@ export REACT_APP_TELEHEALTH_URL=your-react-app-telehealth-hostname
 - When pressing the deploy button for the Telehealth installer, it will occassionally fail to deploy some assets.
   - To fix this, just click redeploy until the deployment process successfully finishes.  You may need to do this a handful of times.
 
-### [Flex Plugin] Installing the Plugin on your Flex Instance
 
-**1. Prerequisite(s)**
+### F4P Install Flex Plugin
 
-**Ensure OpenEMR and ngrok are installed and running**
-
-When you accept a task in Flex, the name of the customer in the chat is queried in OpenEMR in order to obtain patient data and displayed in the information pane. Thus, OpenEMR must be installed. `ngrok` is also required, as it allows the plugin to communicate over the internet into the OpenEMR instance running on your local machine.
-
-1. Follow the instructions here to install and run the [open-emr](https://github.com/bochoi-twlo/hls-ehr#deploy-hls-ehr) repo. 
-2. Follow the instructions here to setup ngrok.
-3. Once ngrok is installed and you have an ngrok account, you will need to add a domain to ngrok. Go to Cloud Edge > Domains > New Domain. Add a domain name of your choosing. Add your authtoken by executing `ngrok authtoken <authtoken>` (the instructions on ngrok's docs are currently incorrect!) Then, from your local machine, run `ngrok http --region=us --hostname=ssepac.ngrok.io 80`, then record the forwarding address listed in your terminal for the next step. (i.e. bjohnson.ngrok.io (ignore the http://))
-4. Export your ngrok url as an environment variable called `REACT_APP_NGROK_URL` (i.e. `export REACT_APP_NGROK_URL=ssepac.ngrok.io`)
-
-**2. Deploy the Plugin to your Flex Instance**
-
-1. Build the docker image of this installer by running this command in your terminal. You'll need to get your Account Sid and Auth Token from your Twilio Console:
-
-```
-docker build --build-arg TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID} --build-arg TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN} --build-arg REACT_APP_TELEHEALTH_URL=${REACT_APP_TELEHEALTH_URL} --build-arg REACT_APP_NGROK_URL=${REACT_APP_NGROK_URL} --no-cache --tag hls-flex-plugin https://github.com/Pham-dev/hls-emr-flex-plugin.git#main
+- Save your ngrok domain name (e.g., bochoi.ngrok.io) as an environment variable by executing
+```shell
+export REACT_APP_NGROK_URL=your-ngrok-domain-name
 ```
 
-2. Now run the built docker image by executing this command:
-
+- Build installer and wait a few minutes to complete
+```shell
+docker build --no-cache \
+--build-arg TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID} \
+--build-arg TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN} \
+--build-arg REACT_APP_TELEHEALTH_URL=${REACT_APP_TELEHEALTH_URL} \
+--build-arg REACT_APP_NGROK_URL=${REACT_APP_NGROK_URL} \
+--tag hls-flex-plugin https://github.com/Pham-dev/hls-emr-flex-plugin.git#main
 ```
-docker run --name hls-flex-plugin --rm -p 3000:3000 -p 3001:3001 -e ACCOUNT_SID=${TWILIO_ACCOUNT_SID} -e AUTH_TOKEN=${TWILIO_AUTH_TOKEN} -it hls-flex-plugin
+
+- Start installer
+```shell
+docker run --name hls-flex-plugin --rm -p 3000:3000 -p 3001:3001 \
+-e ACCOUNT_SID=${TWILIO_ACCOUNT_SID} -e AUTH_TOKEN=${TWILIO_AUTH_TOKEN} -it hls-flex-plugin
 ```
 
-3. Go ahead and open [http://localhost:3000/](http://localhost:3000/) on your favorite browser.
+- Go ahead and open http://localhost:3000/ on your favorite browser.
 
-4. Your credentials should load on the page and all you have to do is click the "Deploy this application" button and you're all set!
+- Your credentials should load on the page and all you have to do is click the "Deploy this application" button and you're all set!
 
-5. You can launch your Flex instance in your flex account to see the plugin now properly installed.
-
-6. Once installation is complete, close the installer via either
+- Once installation is complete, close the installer via either
      - stop button `hls-flex-plugin` in Docker desktop; or
      - control-C in your terminal
-7. On the left pane in the Twilio Console, select Flex > Manage > Messaging. Under Legacy Addresses, select Create New Address and submit a new entry with the following:
 
-![img](images/flex-create-new-address.png)
 
-**Subsequent Installs**
+#### Common Errors
 
-- Just repeat Step 1 through 4 above
-- Notes:
-  - clear your cache on your browser if you run into problems
-  - Re-installing will produce the latest version of the plugin
+- Clear your cache on your browser if you run into problems
+- Re-installing will produce the latest version of the plugin
 
-### [Flex Plugin] Install HLS Website (aka OwlHealth)
+
+### F4P Install OwlHealth Website
 
 - Build installer
  ```shell
@@ -179,19 +211,40 @@ docker run --name hls-website-installer --rm --publish 3000:3000  \
     - control-C in your terminal
 
 - Note the URL for the `hls-website` service in the Twilio console.
-- website URL is http://your-hls-website-url/index.html
+- website URL is `http://your-hls-website-hostname/index.html`
 
+### F4P Launch Flex Blueprint
 
-### [Flex Plugin] Launching Flex Blueprint
+- Run ngrok from your local machine substituting `your-ngrok-domain-name` with your own
+  (e.g., `ssepac.ngrok.io`)
+```shell
+ngrok http --region=us --hostname=your-ngrok-domain-name 80
+```
 
-After installation, you **MUST** launch chrome via command to overcome iframe restrictions of the browser
+- To launch the Owlhealth website, open `http://your-hls-website-hostname/index.html` in chrome substituting `your-hls-website-hostname` from above.
+
+- To launch Flex, you **MUST** launch chrome via command to overcome iframe restrictions of the browser
 
 ```shell
 open -na Google\ Chrome --args --user-data-dir=/tmp/temporary-chrome-profile-dir --disable-web-security --disable-site-isolation-trials
 ```
 ---
 
-### [Optional] Get SMS Translation on your Flex Instance via LionBridge Translations
+### F4P Unistall Blueprint
+
+- OpenEMR
+  - run the installer and click 'Remove...' button in the installer page; or
+  - from your docker desktop manually delete the stack or containers individually
+- Telehealth
+  - remove the Serverless service `hls-telehealth` via Twilio console
+- Flex Plugin
+  - **Cannot be removed**
+- OwlHealth Website
+  - remove the Serverless service `hls-website` via Twilio console
+
+
+
+### F4P [Optional] Get SMS Translation on your Flex Instance via LionBridge Translations
 
 This is an optional step and is not required to get things working.
 
@@ -238,10 +291,3 @@ curl -s 'https://flex-api.twilio.com/v1/Configuration' -u ${TWILIO_ACCOUNT_SID}:
     - Hit save and you're good to go.
 - Now incoming SMS will be translated by Lionbridge.
 
-
-### Ignore
-
-- On the left pane in the Twilio Console, go to Flex > Manage > Messaging. Remove the entry under Conversations Addresses so that it is left empty. Select Legacy Addresses and then add a new entry with the following filled out:
-  ![img](https://i.imgur.com/JocU0ST.png)
-- You should now have only two entries under Legacy Addresses, and none under Conversations Addresses.
-  ![img](https://i.imgur.com/UW58iQg.png)
