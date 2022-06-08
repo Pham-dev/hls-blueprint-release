@@ -215,7 +215,7 @@ docker run --name hls-website-installer --rm --publish 3000:3000  \
 
 ### F4P Launch Flex Blueprint
 
-- Run ngrok from your local machine substituting `your-ngrok-domain-name` with your own
+- Open a new terminal window and run ngrok from your local machine substituting `your-ngrok-domain-name` with your own
   (e.g., `ssepac.ngrok.io`)
 ```shell
 ngrok http --region=us --hostname=your-ngrok-domain-name 80
