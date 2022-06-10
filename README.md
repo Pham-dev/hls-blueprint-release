@@ -291,6 +291,7 @@ curl -s 'https://flex-api.twilio.com/v1/Configuration' -u ${TWILIO_ACCOUNT_SID}:
 - We'll now set the language we want text to be translated to
   - Launch Flex and click on the controls button on the left Panel
   - Click on Skills and under "Add New Skill" add the following Languages depending on prefered language to translate to:
+    - English: add "lanuage*en-us"
     - Spanish: add "language*es-xl
     - Brazilian Portuguese: add "language*pt-br"
 - Now assign the language skill to Agents:
