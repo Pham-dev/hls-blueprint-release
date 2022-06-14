@@ -194,10 +194,24 @@ docker run --name hls-flex-plugin --rm -p 3000:3000 -p 3001:3001 \
      - control-C in your terminal
 
 
-#### Common Errors
+#### Common Errors for Flex Plugin Install
 
 - Clear your cache on your browser if you run into problems
 - Re-installing will produce the latest version of the plugin
+
+### F4P Enable Inbound and Outbound Calling + 3 Way External Warm Transfers
+
+To enable any sort of calling in Flex you will need to enable the dialpad for Flex so you'll need to:
+- Login to your Flex Twilio account
+- navigate to Flex -> Manage -> Voice on the left-hand panel
+- Under "Flex Dialpad":
+   - Flip on Enable Dialpad
+   - Caller Id should be your Flex Phone Number (usually 1 phone number if it's a new account)
+   - Change Task Queue to "Schedulers"
+   - Task Router Workflow: "Intake by Schedulers"
+   - Country: "United States of America"
+
+Next, to enable 3 Way External Warm Transfers (3 way calling), you can send a message to a Twilio Team member and they will be able to turn on that feature flag for your Flex Account.  Once enabled, You are allowed to call in a 3rd person into the call (for our use case it will be a Spanish Interpreter).
 
 
 ### F4P Install OwlHealth Website
