@@ -3,7 +3,7 @@
 This repo will be used to store documents that pertain to HLS Blueprints. This will be continually updated as more documents arise.
 
 - [Flex for Provider](#flex-for-provider-f4p-blueprint)
-- 
+- [Developer Notes](#developer-notes)
 
 HLS team provides the latest version of installers for blueprint via docker hub.
 
@@ -304,3 +304,19 @@ curl -s 'https://flex-api.twilio.com/v1/Configuration' -u ${TWILIO_ACCOUNT_SID}:
 - Now incoming SMS will be translated by Lionbridge.
 
 ---
+
+## Developer Notes
+
+### Blueprint Git Repos
+
+|github repo                                   |notes
+|----------------------------------------------|---------
+|https://github.com/twilio/hls-frontline-pharma|Frontline for Pharma
+|https://github.com/bochoi-twlo/hls-website    |Website with flex webchat client
+|https://github.com/twilio/hls-telehealth      |Either deployed as part of flex or stand-alone
+|https://github.com/twilio/hls-flex-provider   |Flex plugin for Flex4Provider
+|https://github.com/bochoi-twlo/hls-ehr        |OpenEMR/Mirth stack for Flex4Provider & PAM
+|https://github.com/twilio/hls-outreach-sms/tree/docker-installer|Outreach SMS
+|https://github.com/twilio/hls-patient-appointment-management    |Patient Appointment Management /w OpenEMR integration
+
+
