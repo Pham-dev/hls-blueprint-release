@@ -170,8 +170,7 @@ http://localhost:3000/installer.html
 ### F4P Install Flex Plugin
 
 ```diff
-!!! If your Flex account was created prior to Flex UI 2.0 beta,
-then you **MUST** create a new Flex UI 2.0 Account as you cannot upgrade from 1.3 to 2.0 in place
+!!! If your Flex account was created prior to Flex UI 2.0 beta, then you **MUST** create a new Flex UI 2.0 Account as you cannot upgrade from 1.3 to 2.0 in place
 ```
 
 - Note your ngrok domain name (e.g., `bochoi.ngrok.io`)
