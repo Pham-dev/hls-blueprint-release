@@ -170,7 +170,7 @@ http://localhost:3000/installer.html
 ### F4P Install Flex Plugin
 
 ```diff
-!!! You can **ONLY** deploy on a new Flex UI 2.0 Account as you cannot upgrade from 1.3 to 2.0
+!!! You can ONLY deploy on a new Flex UI 2.0 Account as you cannot upgrade from 1.3 to 2.0
 ```
 
 - Note your ngrok domain name (e.g., `bochoi.ngrok.io`)
