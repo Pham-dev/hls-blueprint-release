@@ -13,11 +13,11 @@ HLS team provides the latest version of installers for blueprint via docker hub.
 
 #### Clear Cached Images/File in Chrome
 
+:exclamation:
 ```diff
 ! Always do this before every (re-)install to ensure removal of old images/files.
 ```
-
-:exclamation: *ff*
+:exclamation:
 
 - Goto Settings of Chrome
 - Click 'Privacy and security' on left pan
