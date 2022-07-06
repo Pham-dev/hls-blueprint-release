@@ -105,12 +105,17 @@ Just copy-n-paste the commands below as is and monitor the terminal output for a
 
 ### F4P Install OpenEMR
 
+- Remove previous docker image
+```shell
+docker image rm twiliohls/hls-ehr-installer
+```
+
 - Start installer and wait 1 minute to start up (watch the terminal output)
 ```shell
 docker run --name hls-ehr-installer --rm --publish 3000:3000  \
 --volume /var/run/docker.sock:/var/run/docker.sock \
 --env ACCOUNT_SID=${TWILIO_ACCOUNT_SID} --env AUTH_TOKEN=${TWILIO_AUTH_TOKEN} \
---interactive --tty twiliohls/hls-ehr-installer:latest
+--interactive --tty twiliohls/hls-ehr-installer
 ```
 
 - Open installer url below in chrome
@@ -132,11 +137,16 @@ http://localhost:3000/installer/index.html
 
 ### F4P Install Telehealth
 
+- Remove previous docker image
+```shell
+docker image rm twiliohls/hls-telehealth-installer
+```
+
 - Start installer and wait 1 minute to start up (watch the terminal output)
 ```shell
 docker run --name hls-telehealth-installer --rm --publish 3000:3000 \
 --env ACCOUNT_SID=${TWILIO_ACCOUNT_SID} --env AUTH_TOKEN=${TWILIO_AUTH_TOKEN} \
---interactive --tty twiliohls/hls-telehealth-installer:latest
+--interactive --tty twiliohls/hls-telehealth-installer
 ```
 
 - Open installer url below in chrome
@@ -157,13 +167,22 @@ http://localhost:3000/installer.html
 
 ### F4P Install Flex Plugin
 
+:exclamation: *If your Flex account was created prior to Flex UI 2.0 beta,
+then you **MUST** create a new Flex UI 2.0 Account as you cannot upgrade from 1.3 to 2.0 in place*
+
+
 - Note your ngrok domain name (e.g., `bochoi.ngrok.io`)
+
+- Remove previous docker image
+```shell
+docker image rm twiliohls/hls-flex4p-installer
+```
 
 - Start installer
 ```shell
 docker run --name hls-flex4p-installer --rm --publish 3000:3000 \
 --env ACCOUNT_SID=${TWILIO_ACCOUNT_SID} --env AUTH_TOKEN=${TWILIO_AUTH_TOKEN} \
---interactive --tty twiliohls/hls-flex4p-installer:latest
+--interactive --tty twiliohls/hls-flex4p-installer
 ```
 
 - Open installer url below in chrome
@@ -200,11 +219,16 @@ Next, to enable 3 Way External Warm Transfers (3 way calling), you can send a me
 
 ### F4P Install OwlHealth Website
 
+- Remove previous docker image
+```shell
+docker image rm twiliohls/hls-website-installer
+```
+
 - Start installer and wait 1 minute to start up (watch the terminal output)
 ```shell
 docker run --name hls-website-installer --rm --publish 3000:3000  \
 --env ACCOUNT_SID=${TWILIO_ACCOUNT_SID} --env AUTH_TOKEN=${TWILIO_AUTH_TOKEN} \
---interactive --tty twiliohls/hls-website-installer:latest
+--interactive --tty twiliohls/hls-website-installer
 ```
 
 - Open installer url below in chrome
