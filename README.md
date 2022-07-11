@@ -153,7 +153,7 @@ docker run --name hls-telehealth-installer --rm --publish 3000:3000 \
 
 - Open installer url below in chrome
 ```shell
-http://localhost:3000/installer/index.html
+http://localhost:3000/installer.html
 ```
 
 - Deploy using installer UI entering required information and watch the terminal output
