@@ -73,14 +73,25 @@ as you'll need to edit this later.
 
 ## Flex for Provider (F4P) Blueprint
 
-- [Provision a New Flex Account](#f4p-provision-a-new-flex-account)
-- [Install OpenEMR](#f4p-install-openemr)
-- [Install Telehealth](#f4p-install-telehealth)
-- [Install Flex Plugin](#f4p-install-flex-plugin)
-- [Install OwlHealth Website](#f4p-install-owlhealth-website)
-- [Launch Flex Blueprint](#f4p-launch-flex-blueprint)
-- [Uninstall Flex Blueprint](#f4p-unistall-blueprint)
-- [Translation Services via Lionsbridge](#f4p-optional-get-sms-translation-on-your-flex-instance-via-lionbridge-translations)
+- [HLS Blueprint Release Docs](#hls-blueprint-release-docs)
+    - [Prerequisites](#prerequisites)
+      - [Clear Cached Images/File in Chrome](#clear-cached-imagesfile-in-chrome)
+      - [Docker Desktop](#docker-desktop)
+      - [ngrok](#ngrok)
+  - [Flex for Provider (F4P) Blueprint](#flex-for-provider-f4p-blueprint)
+    - [F4P Provision a New Flex Account](#f4p-provision-a-new-flex-account)
+    - [F4P Install OpenEMR](#f4p-install-openemr)
+    - [F4P Install Telehealth](#f4p-install-telehealth)
+      - [Common Errors](#common-errors)
+    - [F4P Install Flex Plugin](#f4p-install-flex-plugin)
+      - [Common Errors for Flex Plugin Install](#common-errors-for-flex-plugin-install)
+      - [[Optional] Enable Inbound and Outbound Calling + 3 Way External Warm Transfers](#optional-enable-inbound-and-outbound-calling--3-way-external-warm-transfers)
+    - [F4P Install OwlHealth Website](#f4p-install-owlhealth-website)
+    - [F4P Launch Flex Blueprint](#f4p-launch-flex-blueprint)
+    - [F4P Unistall Blueprint](#f4p-unistall-blueprint)
+    - [F4P [Optional] Get SMS Translation on your Flex Instance via LionBridge Translations](#f4p-optional-get-sms-translation-on-your-flex-instance-via-lionbridge-translations)
+  - [Developer Notes](#developer-notes)
+    - [Blueprint Git Repos](#blueprint-git-repos)
 
 ### F4P Provision a New Flex Account
 
@@ -153,7 +164,7 @@ docker run --name hls-telehealth-installer --rm --publish 3000:3000 \
 
 - Open installer url below in chrome
 ```shell
-http://localhost:3000/installer.html
+http://localhost:3000/installer/index.html
 ```
 
 - Deploy using installer UI entering required information and watch the terminal output
@@ -285,40 +296,13 @@ open -na Google\ Chrome --args --user-data-dir=/tmp/temporary-chrome-profile-dir
 
 This is an optional step and is not required to get things working.
 
-- First, downgrade Flex to Version 1.30.2:
-  - In your Flex Instance, click on the controls Tab
-  - Then Click on "Versions"
-  - Then choose Version: 1.30.2 and install that
-- Create the Lionbridge Plugin by running this command in your terminal
-```shell
-curl -X POST https://flex-api.twilio.com/v1/PluginService/Plugins \
---data-urlencode "FriendlyName=Lionbridge Language Cloud" \
---data-urlencode "Description=Real-time language translation provided by Lionbridge" \
---data-urlencode "UniqueName=lionbridge" \
--u ${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}
-```
-- Next use the response from the above command and make note of the PluginSid (ex: FPXXXXXXXXXXX) and run this command in the terminal but replace the FPXXXXXXX.... string with your PluginSid
-```shell
-curl -X POST https://flex-api.twilio.com/v1/PluginService/Plugins/FPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Versions \
---data-urlencode "Private=True" \
---data-urlencode "Version=1.0.0" \
---data-urlencode "PluginUrl=https://developers.lionbridge.com/geofluent/plugin/plugin-geofluent.js" \
--u -u ${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}
-```
-- Release the Plugin to your Flex account
-```shell
-twilio flex:plugins:release --plugin lionbridge@1.0.0 --name "Lionbridge" --description "Adding Lionbridge integration"
-```
-- Next Configure your Lionbridge Plugin to call the ```/get-credentials``` function that was deployed in the plugin-backend which should already been deployed alongside your Flex install.  ```PLUGIN_BACKEND_URL``` can be found in the Twilio console under Functions and Assets -> Services.  Then click on your ```plugin-backend``` and take note of the url at the bottom left of the screen.  It should look like this: ```plugin-backend-XXXX-dev.twil.io```.  You will need this URL for the below command. Fill out the command and run it in the terminal
-```shell
-curl -s 'https://flex-api.twilio.com/v1/Configuration' -u ${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN} | jq -r -c '{ attributes: .attributes } * { "account_sid": "${TWILIO_ACCOUNT_SID}", "attributes": { "lionbridge": {"credentials": "https://${PLUGIN_BACKEND_URL}/get-credentials"} }}' | curl -s -X POST 'https://flex-api.twilio.com/v1/Configuration' -u ${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN} -H 'Content-Type: application/json' -d @-
-```
-- We'll now set the language we want text to be translated to
+- Set the language we want text to be translated to
   - Launch Flex and click on the controls button on the left Panel
   - Click on Skills and under "Add New Skill" add the following Languages depending on prefered language to translate to:
     - English: add "lanuage*en-us"
     - Spanish: add "language*es-xl
     - Brazilian Portuguese: add "language*pt-br"
+    - ![Add Skill](https://i.imgur.com/5SLkhii.png)
 - Now assign the language skill to Agents:
   - In the Agent Tab, 3rd down on the left panel of the Flex Instance:
     - Click on an agent
@@ -327,6 +311,16 @@ curl -s 'https://flex-api.twilio.com/v1/Configuration' -u ${TWILIO_ACCOUNT_SID}:
     - Click the Blue Plus button to the right of it and make sure it is checked on
     - NOTE: Only have 1 language chosen at a time
     - Hit save and you're good to go.
+    - ![Select Skill](https://i.imgur.com/kGiPY5D.png)
+- Enable the Lionbridge plugin
+  - Go to the Flex admin dashboard and select Plugins
+  - Select the "Lionbridge Language Cloud" plugin
+  - ![Select plugin](https://i.imgur.com/RerB3bi.png)
+  - Select the "enabled" radiobutton
+  - Select version either version 1.0.0 or 1.0.1 from the dropdown.
+  - Select "Save"
+  - ![Enable plugin](https://i.imgur.com/tlLfBh0.png)
+  - You will be prompted to type in a release name and description. Enter "InitialRelease" as the name and "Initial release" as the description.
 - Now incoming SMS will be translated by Lionbridge.
 
 ---
