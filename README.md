@@ -302,7 +302,7 @@ This is an optional step and is not required to get things working.
     - English: add "lanuage*en-us"
     - Spanish: add "language*es-xl
     - Brazilian Portuguese: add "language*pt-br"
-    - ![Add Skill](https://i.imgur.com/5SLkhii.png)
+    - ![Add Skill](https://i.imgur.com/5SLkhiim.png)
 - Now assign the language skill to Agents:
   - In the Agent Tab, 3rd down on the left panel of the Flex Instance:
     - Click on an agent
@@ -311,7 +311,7 @@ This is an optional step and is not required to get things working.
     - Click the Blue Plus button to the right of it and make sure it is checked on
     - NOTE: Only have 1 language chosen at a time
     - Hit save and you're good to go.
-    - ![Select Skill](https://i.imgur.com/kGiPY5D.png)
+    - ![Select Skill](https://i.imgur.com/kGiPY5Dm.png)
 - Enable the Lionbridge plugin
   - Go to the Flex admin dashboard and select Plugins
   - Select the "Lionbridge Language Cloud" plugin
@@ -319,7 +319,7 @@ This is an optional step and is not required to get things working.
   - Select the "enabled" radiobutton
   - Select version either version 1.0.0 or 1.0.1 from the dropdown.
   - Select "Save"
-  - ![Enable plugin](https://i.imgur.com/tlLfBh0.png)
+  - ![Enable plugin](https://i.imgur.com/tlLfBh0m.png)
   - You will be prompted to type in a release name and description. Enter "InitialRelease" as the name and "Initial release" as the description.
 - Now incoming SMS will be translated by Lionbridge.
 
@@ -338,5 +338,4 @@ This is an optional step and is not required to get things working.
 |https://github.com/bochoi-twlo/hls-ehr        |OpenEMR/Mirth stack for Flex4Provider & PAM
 |https://github.com/twilio/hls-outreach-sms/tree/docker-installer|Outreach SMS
 |https://github.com/twilio/hls-patient-appointment-management    |Patient Appointment Management /w OpenEMR integration
-
 
