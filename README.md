@@ -95,10 +95,11 @@ as you'll need to edit this later.
 
 ### F4P Provision a New Flex Account
 
-- Create ❗**NEW** ❗ Twilio account for Flex per [Set up your Twilio flex instance](https://www.twilio.com/docs/flex/tutorials/setup)
+- Create ❗**NEW** ❗ Twilio account for Flex per [Set up your Twilio flex instance](https://www.twilio.com/docs/flex/tutorials/setup). ❗❗❗DO NOT INSTALL TO EXISTING FLEX ACCOUNT WITH OTHER PLUG-INS❗❗❗
   - Assign account name: **hls-flex-provider** (or some variation of)
   - Verify MFA
   - Wait until complete ... 
+- Launch the Flex console and choose 'Login in with Twilio'. You ❗MUST❗ do this step to properly create a flex worker using your twilio user.
 - Upgrade this trial account to regular account via Monkey (you can do this a bit later before you run the demo)
 
 - Note the ACCOUNT_SID & AUTH_TOKEN of newly created account from the Twilio console
