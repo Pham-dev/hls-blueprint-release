@@ -99,7 +99,10 @@ as you'll need to edit this later.
   - Assign account name: **hls-flex-provider** (or some variation of)
   - Verify MFA
   - Wait until complete ... 
-- Launch the Flex console and choose 'Login in with Twilio'. You ❗MUST❗ do this step to properly create a flex worker using your twilio user.
+- Launch the Flex console and choose 'Login in with Twilio' and then make yourself 'Available'. You ❗❗❗MUST❗❗❗ do this step to properly create a flex worker using your twilio user.
+- Also, go to the Admin section of Flex console and manually add the following to Skills. You ❗❗❗MUST❗❗❗ do this manually. Make sure spelling is correct!
+  - Scheduling
+  - Education
 - Upgrade this trial account to regular account via Monkey (you can do this a bit later before you run the demo)
 
 - Note the ACCOUNT_SID & AUTH_TOKEN of newly created account from the Twilio console
