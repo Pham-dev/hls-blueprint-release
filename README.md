@@ -161,7 +161,7 @@ docker image rm twiliohls/hls-telehealth-installer
 
 - Start installer and wait 1 minute to start up (watch the terminal output)
 ```shell
-docker run --name hls-telehealth-installer --rm --publish 3000:3000 \
+docker run --pull=always --name hls-telehealth-installer --rm --publish 3000:3000 \
 --env ACCOUNT_SID=${TWILIO_ACCOUNT_SID} --env AUTH_TOKEN=${TWILIO_AUTH_TOKEN} \
 --interactive --tty twiliohls/hls-telehealth-installer
 ```
@@ -243,7 +243,7 @@ docker image rm twiliohls/hls-website-installer
 
 - Start installer and wait 1 minute to start up (watch the terminal output)
 ```shell
-docker run --name hls-website-installer --rm --publish 3000:3000  \
+docker run --pull=always --name hls-website-installer --rm --publish 3000:3000  \
 --env ACCOUNT_SID=${TWILIO_ACCOUNT_SID} --env AUTH_TOKEN=${TWILIO_AUTH_TOKEN} \
 --interactive --tty twiliohls/hls-website-installer
 ```
