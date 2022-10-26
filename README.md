@@ -129,7 +129,7 @@ docker image rm twiliohls/hls-ehr-installer
 
 - Start installer and wait 1 minute to start up (watch the terminal output)
 ```shell
-docker run --name hls-ehr-installer --rm --publish 3000:3000  \
+docker run --pull=always --name hls-ehr-installer --rm --publish 3000:3000  \
 --volume /var/run/docker.sock:/var/run/docker.sock \
 --env ACCOUNT_SID=${TWILIO_ACCOUNT_SID} --env AUTH_TOKEN=${TWILIO_AUTH_TOKEN} \
 --interactive --tty twiliohls/hls-ehr-installer
@@ -197,7 +197,7 @@ docker image rm twiliohls/hls-flex4p-installer
 
 - Start installer
 ```shell
-docker run --name hls-flex4p-installer --rm --publish 3000:3000 \
+docker run --pull=always --name hls-flex4p-installer --rm --publish 3000:3000 \
 --env ACCOUNT_SID=${TWILIO_ACCOUNT_SID} --env AUTH_TOKEN=${TWILIO_AUTH_TOKEN} \
 --interactive --tty twiliohls/hls-flex4p-installer
 ```
