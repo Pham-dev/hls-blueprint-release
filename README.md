@@ -33,41 +33,6 @@ HLS team provides the latest version of installers for blueprint via docker hub.
 docker system prune --force
 ```
 
-#### ngrok
-
-When you accept a task in Flex, the name of the customer in the chat is queried in OpenEMR
-in order to obtain patient data and displayed in the information pane.
-Thus, OpenEMR must be installed locally on your laptop. `ngrok` is also required,
-as it allows the plugin to communicate over the internet into the OpenEMR instance running on your local machine.
-
-- Goto https://ngrok.com/download
-- Download and install ngrok
-- If you have twilio email, register at http://ngrok.com using your twilio email
-- Get yourself invited from hls team member to assign a static ngrok url for yourself
-  (e.g., `bochoi.ngrok.io`)
-- Accept the invite and login
-- Note your own authtoken at https://dashboard.ngrok.com/get-started/your-authtoken
-- Add your authtoken to your ngrok via executing the following in the terminal
-```shell
-ngrok authtoken your-ngrok-auth-token
-```
-- Go to Cloud Edge → Domains
-  - Click '+ New Domain' button
-  - Add a domain name of your choosing. (e.g., `ssepac.ngrok.io` using your twilio login)
-  - Note this ngrok domain name for later use
-
-If your `ngrok` version is not 3.3 or higher, run the following to update
-```shell
-brew reinstall --cask ngrok
-```
-
-and then upgrade your ngrok configuration too by
-```shell
-ngrok config upgrade --relocate
-```
-
-Note location of configuration file (`ngrok.yml`) will be `~/Library/Application Support/ngrok/ngrok.yml`
-as you'll need to edit this later.
 
 ---
 
@@ -80,7 +45,6 @@ as you'll need to edit this later.
       - [ngrok](#ngrok)
   - [Flex for Provider (F4P) Blueprint](#flex-for-provider-f4p-blueprint)
     - [F4P Provision a New Flex Account](#f4p-provision-a-new-flex-account)
-    - [F4P Install OpenEMR](#f4p-install-openemr)
     - [F4P Install Telehealth](#f4p-install-telehealth)
       - [Common Errors](#common-errors)
     - [F4P Install Flex Plugin](#f4p-install-flex-plugin)
@@ -120,44 +84,8 @@ Keep the terminal open as you will use it throughout the installation.
 Just copy-n-paste the commands below as is and monitor the terminal output for any error messages.
 
 
-### F4P Install OpenEMR
-
-- Remove previous docker image
-```shell
-docker image rm twiliohls/hls-ehr-installer
-```
-
-- Start installer and wait 1 minute to start up (watch the terminal output)
-```shell
-docker run --pull=always --name hls-ehr-installer --rm --publish 3000:3000  \
---volume /var/run/docker.sock:/var/run/docker.sock \
---env ACCOUNT_SID=${TWILIO_ACCOUNT_SID} --env AUTH_TOKEN=${TWILIO_AUTH_TOKEN} \
---interactive --tty twiliohls/hls-ehr-installer
-```
-
-- Open installer url below in chrome
-```shell
-http://localhost:3000/installer/index.html
-```
-
-- If you wish to reinstall, you must first remove existing installation by either
-  - Clicking on the 'Remove...' button at the bottom or
-  - Manually delete the `hls-ehr` docker stack via the docker desktop.
-    If you are unable to delete the stack, you can delete it's container one-by-one
-  
-- Deploy using installer UI entering required information and watch the terminal output
-
-- Once installation is complete, close the installer via either
-  - stop button `hls-ehr-installer` in Docker desktop; or
-  - control-C in your terminal
-
 
 ### F4P Install Telehealth
-
-- Remove previous docker image
-```shell
-docker image rm twiliohls/hls-telehealth-installer
-```
 
 - Start installer and wait 1 minute to start up (watch the terminal output)
 ```shell
@@ -176,7 +104,9 @@ http://localhost:3000/installer/index.html
 - Once installation is complete, close the installer via either
     - stop button `hls-telehealth-installer` in Docker desktop; or
     - control-C in your terminal
-    
+
+- Log into Flex account and navigate to 'Functions & Assets' and 'telehealth' service. And, note the hostname at the bottom just above the 'Deploy All' button. This will be your telehealth hostname use later below.
+
 #### Common Errors
 - When pressing the deploy button for the Telehealth installer, it will occassionally fail to deploy some `assets`.
   - To fix this, just click redeploy until the deployment process successfully finishes.  You may need to do this a handful of times.
@@ -186,13 +116,6 @@ http://localhost:3000/installer/index.html
 
 ```diff
 !!! You can ONLY deploy on a new Flex UI 2.0 Account as you cannot upgrade from 1.3 to 2.0
-```
-
-- Note your ngrok domain name (e.g., `bochoi.ngrok.io`)
-
-- Remove previous docker image
-```shell
-docker image rm twiliohls/hls-flex4p-installer
 ```
 
 - Start installer
@@ -208,6 +131,8 @@ http://localhost:3000/installer/index.html
 ```
 
 - Deploy using installer UI entering required information and watch the terminal output
+     - for TELEHEALTH_HOSTNAME use telehealth hostname from above
+     - for OPENEMR_NGROK_HOSTNAME set to ehr.cloudcityhealthcare.com
 
 - Once installation is complete, close the installer via either
      - stop button `hls-flex4p-installer` in Docker desktop; or
@@ -343,3 +268,72 @@ This is an optional step and is not required to get things working.
 |https://github.com/twilio/hls-outreach-sms/tree/docker-installer|Outreach SMS
 |https://github.com/twilio/hls-patient-appointment-management    |Patient Appointment Management /w OpenEMR integration
 
+
+### F4P Install OpenEMR
+
+- Remove previous docker image
+```shell
+docker image rm twiliohls/hls-ehr-installer
+```
+
+- Start installer and wait 1 minute to start up (watch the terminal output)
+```shell
+docker run --pull=always --name hls-ehr-installer --rm --publish 3000:3000  \
+--volume /var/run/docker.sock:/var/run/docker.sock \
+--env ACCOUNT_SID=${TWILIO_ACCOUNT_SID} --env AUTH_TOKEN=${TWILIO_AUTH_TOKEN} \
+--interactive --tty twiliohls/hls-ehr-installer
+```
+
+- Open installer url below in chrome
+```shell
+http://localhost:3000/installer/index.html
+```
+
+- If you wish to reinstall, you must first remove existing installation by either
+  - Clicking on the 'Remove...' button at the bottom or
+  - Manually delete the `hls-ehr` docker stack via the docker desktop.
+    If you are unable to delete the stack, you can delete it's container one-by-one
+  
+- Deploy using installer UI entering required information and watch the terminal output
+
+- Once installation is complete, close the installer via either
+  - stop button `hls-ehr-installer` in Docker desktop; or
+  - control-C in your terminal
+
+
+
+#### ngrok
+
+When you accept a task in Flex, the name of the customer in the chat is queried in OpenEMR
+in order to obtain patient data and displayed in the information pane.
+Thus, OpenEMR must be installed locally on your laptop. `ngrok` is also required,
+as it allows the plugin to communicate over the internet into the OpenEMR instance running on your local machine.
+
+- Goto https://ngrok.com/download
+- Download and install ngrok
+- If you have twilio email, register at http://ngrok.com using your twilio email
+- Get yourself invited from hls team member to assign a static ngrok url for yourself
+  (e.g., `bochoi.ngrok.io`)
+- Accept the invite and login
+- Note your own authtoken at https://dashboard.ngrok.com/get-started/your-authtoken
+- Add your authtoken to your ngrok via executing the following in the terminal
+```shell
+ngrok authtoken your-ngrok-auth-token
+```
+- Go to Cloud Edge → Domains
+  - Click '+ New Domain' button
+  - Add a domain name of your choosing. (e.g., `ssepac.ngrok.io` using your twilio login)
+  - Note this ngrok domain name for later use
+
+If your `ngrok` version is not 3.3 or higher, run the following to update
+```shell
+brew reinstall --cask ngrok
+```
+
+and then upgrade your ngrok configuration too by
+```shell
+ngrok config upgrade --relocate
+```
+
+Note location of configuration file (`ngrok.yml`) will be `~/Library/Application Support/ngrok/ngrok.yml`
+as you'll need to edit this later.
