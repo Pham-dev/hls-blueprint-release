@@ -181,7 +181,7 @@ http://localhost:3000/installer/index.html
     - control-C in your terminal
 
 - Note the URL for the `hls-website` service in the Twilio console.
-- website URL is `http://your-hls-website-hostname/index.html`
+- website URL is `http://your-hls-website-hostname/`
 
 
 ### F4P Launch Flex Blueprint
