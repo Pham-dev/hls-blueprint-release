@@ -186,12 +186,6 @@ http://localhost:3000/installer/index.html
 
 ### F4P Launch Flex Blueprint
 
-- Open a new terminal window and run ngrok from your local machine substituting `your-ngrok-domain-name` with your own
-  (e.g., `bochoi.ngrok.io`)
-```shell
-ngrok http --region=us --hostname=your-ngrok-domain-name 80
-```
-
 - To launch Flex, you **MUST** launch chrome via command to overcome iframe restrictions of the browser
 
 ```shell
